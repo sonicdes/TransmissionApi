@@ -54,7 +54,7 @@ class TransmissionApi::Client
     response["arguments"]["torrents"].first
   end
 
-  def create(filename)
+  def create(filename, opts = {})
     log "add_torrent: #{filename}"
 
     response =
@@ -62,7 +62,7 @@ class TransmissionApi::Client
         :method => "torrent-add",
         :arguments => {
           :filename => filename
-        }
+        }.merge( opts )
       )
 
     response["arguments"]["torrent-added"]
