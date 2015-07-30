@@ -133,6 +133,18 @@ class ClientTest < Minitest::Test
     assert_equal( "torrent-added", @client.create( "filename" ) )
   end
 
+  def test_create_with_options
+    opts_expected = {
+      :method => "torrent-add",
+      :arguments => { :filename => "filename", 'option1' => 'value1', 'option2' => 'value2' }
+    }
+    result = { "arguments" => { "torrent-added" => "torrent-added" } }
+
+    @client.expects(:post).with( opts_expected ).returns( result )
+    
+    assert_equal( "torrent-added", @client.create( "filename", 'option1' => 'value1', 'option2' => 'value2' ) )
+  end
+
   def test_destroy
     opts_expected = {
       :method => "torrent-remove",
